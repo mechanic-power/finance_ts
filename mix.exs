@@ -21,6 +21,7 @@ defmodule FinanceTS.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
+      {:mix_test_watch, "~> 1.0", only: :dev, runtime: false},
       {:tesla, "~> 1.3.0"}
     ]
   end
