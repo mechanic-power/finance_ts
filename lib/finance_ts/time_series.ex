@@ -23,6 +23,9 @@ defmodule FinanceTS.TimeSeries do
     # ...
     format: "list",
 
+    # The amount of datapoints that are available
+    size: 0,
+
     # The data reference, for example the stringified csv
     data: []
   ]
