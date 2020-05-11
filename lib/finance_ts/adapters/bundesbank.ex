@@ -1,4 +1,4 @@
-defmodule FinanceTS.BundesbankAdapter do
+defmodule FinanceTS.Adapters.Bundesbank do
   @moduledoc """
   An Adapter for Bundesbank
 
@@ -31,11 +31,18 @@ defmodule FinanceTS.BundesbankAdapter do
           |> Enum.filter(fn data_point -> valid?(data_point) end)
           |> Enum.map(fn %{ts: ts, c: c} -> %OHLCV{ts: ts, c: c} end)
 
+        %OHLCV{ts: first_ts} = List.first(data)
+        %OHLCV{ts: last_ts, c: latest_price} = List.last(data)
+
         {:ok,
          %TimeSeries{
            symbol: "GOLD",
            source: @source,
            currency: "USD",
+           size: length(data),
+           first_ts: first_ts,
+           last_ts: last_ts,
+           latest_price: latest_price,
            data: data
          }}
 
