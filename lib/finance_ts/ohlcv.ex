@@ -14,7 +14,7 @@ defmodule FinanceTS.OHLCV do
     # Low price
     :l,
 
-    # Closeing price
+    # Closing price
     :c,
 
     # Volume

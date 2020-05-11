@@ -1,7 +1,7 @@
-defmodule FinanceTS.Adapters.Yahoo.JsonApiTest do
+defmodule FinanceTS.Adapters.YahooTest do
   use FinanceTS.AdapterCase
 
-  alias FinanceTS.Adapters.Yahoo.JsonApi
+  alias FinanceTS.Adapters.Yahoo
 
   setup do
     Tesla.Mock.mock(fn
@@ -17,7 +17,7 @@ defmodule FinanceTS.Adapters.Yahoo.JsonApiTest do
 
   describe "#chart" do
     test "test fully working chart" do
-      {:ok, time_series} = JsonApi.chart("ncm.ax")
+      {:ok, time_series} = Yahoo.chart("ncm.ax")
 
       assert %{time_series | data: []} == %TimeSeries{
                symbol: "NCM.AX",
@@ -49,7 +49,7 @@ defmodule FinanceTS.Adapters.Yahoo.JsonApiTest do
     end
 
     test "test chart with no data" do
-      {:ok, time_series} = JsonApi.chart("agldf")
+      {:ok, time_series} = Yahoo.chart("agldf")
 
       assert time_series == %TimeSeries{
                symbol: "AGLDF",
