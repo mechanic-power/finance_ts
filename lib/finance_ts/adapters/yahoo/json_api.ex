@@ -39,6 +39,7 @@ defmodule FinanceTS.Adapters.Yahoo.JsonApi do
        symbol: meta["symbol"],
        currency: String.upcase(meta["currency"]),
        source: meta["exchangeName"],
+       size: length(candles),
        first_ts: first_ts,
        last_ts: last_ts,
        latest_price: latest_price,

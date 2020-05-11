@@ -23,12 +23,11 @@ defmodule FinanceTS.Adapters.Yahoo.JsonApiTest do
                symbol: "NCM.AX",
                currency: "AUD",
                source: "ASX",
+               size: 42,
                first_ts: 1_586_217_600,
                last_ts: 1_587_099_600,
                latest_price: 28.56999969482422
              }
-
-      assert length(time_series.data) == 42
 
       assert List.first(time_series.data) == %OHLCV{
                c: 26.559999465942383,
