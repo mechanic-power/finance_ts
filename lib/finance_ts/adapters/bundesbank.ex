@@ -12,7 +12,7 @@ defmodule FinanceTS.BundesbankAdapter do
 
   use Tesla
 
-  plug Tesla.Middleware.BaseUrl, "https://www.bundesbank.de/statistic-rmi/StatisticDownload"
+  plug(Tesla.Middleware.BaseUrl, "https://www.bundesbank.de/statistic-rmi/StatisticDownload")
 
   alias FinanceTS.TimeSeries
   alias FinanceTS.OHLCV
@@ -31,15 +31,16 @@ defmodule FinanceTS.BundesbankAdapter do
           |> Enum.filter(fn data_point -> valid?(data_point) end)
           |> Enum.map(fn %{ts: ts, c: c} -> %OHLCV{ts: ts, c: c} end)
 
-      {:ok,
-        %TimeSeries{
-          symbol: "GOLD", source: @source,
-          currency: "USD",
-          data: data
-        }
-      }
+        {:ok,
+         %TimeSeries{
+           symbol: "GOLD",
+           source: @source,
+           currency: "USD",
+           data: data
+         }}
 
-      {:error, error} -> {:error, error}
+      {:error, error} ->
+        {:error, error}
     end
   end
 
@@ -55,6 +56,7 @@ defmodule FinanceTS.BundesbankAdapter do
       c: cast_price(price_str)
     }
   end
+
   defp cast_row(_), do: nil
 
   defp cast_date(date_iso_8601) do
