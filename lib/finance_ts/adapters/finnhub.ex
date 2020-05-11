@@ -1,7 +1,10 @@
 defmodule FinanceTS.Adapters.Finnhub do
   use Tesla
-
   plug(Tesla.Middleware.BaseUrl, "https://finnhub.io/api/v1")
+
+  @behaviour FinanceTS.Adapter
+
+  def get_adapter_id, do: :finnhub
 
   def get_cv_csv(symbol, opts \\ []) do
     case get_raw_ohclv_csv(symbol, opts) do
