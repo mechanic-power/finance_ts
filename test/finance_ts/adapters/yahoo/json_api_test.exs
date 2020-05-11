@@ -50,8 +50,6 @@ defmodule FinanceTS.Adapters.Yahoo.JsonApiTest do
     end
 
     test "test chart with no data" do
-      # assert JsonApi.do_cast_candles([1,2,3,4], [1,2,3,4], []) == [1,2,3]
-
       {:ok, time_series} = JsonApi.chart("agldf")
 
       assert time_series == %TimeSeries{
