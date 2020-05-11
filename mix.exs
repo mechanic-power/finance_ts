@@ -5,7 +5,7 @@ defmodule FinanceTS.MixProject do
     [
       app: :finance_ts,
       version: "0.1.0",
-      elixir: "~> 1.10",
+      elixir: "~> 1.9",
       elixirc_paths: elixirc_paths(Mix.env()),
       start_permanent: Mix.env() == :prod,
       deps: deps(),
