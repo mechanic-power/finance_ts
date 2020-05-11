@@ -1,4 +1,4 @@
-defmodule Mix.Tasks.Financets.Gen.Adapter do
+defmodule Mix.Tasks.FinanceTs.Gen.Adapter do
   @moduledoc """
   Generates an api adapter.
 
@@ -25,8 +25,8 @@ defmodule Mix.Tasks.Financets.Gen.Adapter do
     ]
 
     copy_templates("priv/templates/finance_ts.gen.adapter", binding, [
-      {"adapter.ex", "lib/crypto_exchanges/adapters/#{binding[:path]}_adapter.ex"},
-      {"adapter_test.exs", "test/crypto_exchanges/adapters/#{binding[:path]}_adapter_test.exs"}
+      {"adapter.ex", "lib/finance_ts/adapters/#{binding[:path]}.ex"},
+      {"adapter_test.exs", "test/finance_ts/adapters/#{binding[:path]}_test.exs"}
     ])
 
     Mix.shell().info("""
@@ -37,7 +37,7 @@ defmodule Mix.Tasks.Financets.Gen.Adapter do
   @spec raise_with_help() :: no_return()
   defp raise_with_help do
     Mix.raise("""
-    mix exchange.gen.adapter expects an exchange name:
+    mix exchange.gen.adapter expects an api name:
 
         mix exchange.gen.adapter ApiName
     """)
