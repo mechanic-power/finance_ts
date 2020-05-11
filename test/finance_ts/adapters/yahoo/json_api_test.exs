@@ -30,7 +30,7 @@ defmodule FinanceTS.Adapters.Yahoo.JsonApiTest do
 
       assert length(time_series.data) == 42
 
-      assert List.first(time_series.data) == %OHCLV{
+      assert List.first(time_series.data) == %OHLCV{
                c: 26.559999465942383,
                h: 27.170000076293945,
                l: 26.40999984741211,
@@ -39,7 +39,7 @@ defmodule FinanceTS.Adapters.Yahoo.JsonApiTest do
                v: 0
              }
 
-      assert List.last(time_series.data) == %OHCLV{
+      assert List.last(time_series.data) == %OHLCV{
                c: 28.56999969482422,
                h: 28.610000610351563,
                l: 28.260000228881836,

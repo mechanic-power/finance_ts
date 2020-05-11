@@ -1,7 +1,7 @@
 defmodule FinanceTS.Adapters.Yahoo.JsonApi do
   use Tesla
 
-  alias FinanceTS.OHCLV
+  alias FinanceTS.OHLCV
   alias FinanceTS.TimeSeries
 
   plug(Tesla.Middleware.BaseUrl, "https://query1.finance.yahoo.com/v8/finance")
@@ -31,8 +31,8 @@ defmodule FinanceTS.Adapters.Yahoo.JsonApi do
        }) do
     candles = cast_candles(timestamps, quotes)
 
-    %OHCLV{ts: first_ts} = List.first(candles)
-    %OHCLV{ts: last_ts, c: latest_price} = List.last(candles)
+    %OHLCV{ts: first_ts} = List.first(candles)
+    %OHLCV{ts: last_ts, c: latest_price} = List.last(candles)
 
     {:ok,
      %TimeSeries{
@@ -61,7 +61,7 @@ defmodule FinanceTS.Adapters.Yahoo.JsonApi do
   end
 
   defp do_cast_candles([ts | list_ts], [o | list_o], [h | list_h], [c | list_c], [l | list_l], [v | list_v], result) do
-    ohclv = %OHCLV{ts: ts, o: o, h: h, c: c, l: l, v: v}
+    ohclv = %OHLCV{ts: ts, o: o, h: h, c: c, l: l, v: v}
     do_cast_candles(list_ts, list_o, list_h, list_c, list_l, list_v, [ohclv | result])
   end
 

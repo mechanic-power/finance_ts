@@ -9,7 +9,7 @@ defmodule FinanceTS.AdapterCase do
   using do
     quote do
       import FinanceTS.AdapterCase
-      alias FinanceTS.OHCLV
+      alias FinanceTS.OHLCV
       alias FinanceTS.TimeSeries
     end
   end

@@ -1,4 +1,4 @@
-defmodule FinanceTS.OHCLV do
+defmodule FinanceTS.OHLCV do
   @enforce_keys [:ts, :c]
 
   defstruct [

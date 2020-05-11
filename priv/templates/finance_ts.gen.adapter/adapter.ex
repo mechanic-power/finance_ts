@@ -13,7 +13,7 @@ defmodule FinanceTS.<%= scoped %>Adapter do
 
   plug Tesla.Middleware.BaseUrl, "https://example.com/api" # TODO
 
-  alias FinanceTS.OHCLV
+  alias FinanceTS.OHLCV
 
   # Private functions
   @url "https://example.com/api" # TODO
