@@ -1,4 +1,4 @@
-# FinanceTs
+# FinanceTS
 
 **TODO: Add description**
 

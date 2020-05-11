@@ -1,6 +1,6 @@
-defmodule FinanceTs do
+defmodule FinanceTS do
   @moduledoc """
-  Documentation for `FinanceTs`.
+  Documentation for `FinanceTS`.
   """
 
   @doc """
@@ -8,7 +8,7 @@ defmodule FinanceTs do
 
   ## Examples
 
-      iex> FinanceTs.hello()
+      iex> FinanceTS.hello()
       :world
 
   """

@@ -1,4 +1,4 @@
-defmodule FinanceTs.MixProject do
+defmodule FinanceTS.MixProject do
   use Mix.Project
 
   def project do
