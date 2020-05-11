@@ -6,10 +6,10 @@ defmodule FinanceTS.Adapters.Yahoo.JsonApiTest do
   setup do
     Tesla.Mock.mock(fn
       %{method: :get, url: "https://query1.finance.yahoo.com/v8/finance/chart/ncm.ax?range=7d&interval=1h&events=history,div,splits"} ->
-        %Tesla.Env{status: 200, body: File.read!("test/support/yahoo_finance/ncm.ax_7d.json") |> Jason.decode!()}
+        %Tesla.Env{status: 200, body: File.read!("test/support/adapters/yahoo/ncm.ax_7d.json") |> Jason.decode!()}
 
       %{method: :get, url: "https://query1.finance.yahoo.com/v8/finance/chart/agldf?range=7d&interval=1h&events=history,div,splits"} ->
-        %Tesla.Env{status: 200, body: File.read!("test/support/yahoo_finance/agldf_7d_no_candles.json") |> Jason.decode!()}
+        %Tesla.Env{status: 200, body: File.read!("test/support/adapters/yahoo/agldf_7d_no_candles.json") |> Jason.decode!()}
     end)
 
     :ok
