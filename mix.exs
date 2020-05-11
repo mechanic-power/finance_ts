@@ -8,7 +8,10 @@ defmodule FinanceTS.MixProject do
       elixir: "~> 1.10",
       elixirc_paths: elixirc_paths(Mix.env()),
       start_permanent: Mix.env() == :prod,
-      deps: deps()
+      deps: deps(),
+      preferred_cli_env: [
+        "test.watch": :test
+      ]
     ]
   end
 
@@ -24,7 +27,7 @@ defmodule FinanceTS.MixProject do
   defp deps do
     [
       {:jason, "~> 1.0"},
-      {:mix_test_watch, "~> 1.0", only: :dev, runtime: false},
+      {:mix_test_watch, "~> 1.0", only: :test, runtime: false},
       {:tesla, "~> 1.3.0"}
     ]
   end
