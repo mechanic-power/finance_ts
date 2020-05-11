@@ -9,9 +9,11 @@ defmodule FinanceTS.<%= scoped %>Adapter do
   """
   @behaviour FinanceTS.Adapter
 
-  alias FinanceTS.OHCLV
+  use Tesla
 
-  # ...
+  plug Tesla.Middleware.BaseUrl, "https://example.com/api" # TODO
+
+  alias FinanceTS.OHCLV
 
   # Private functions
   @url "https://example.com/api" # TODO
