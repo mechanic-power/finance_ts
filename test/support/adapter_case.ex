@@ -9,13 +9,13 @@ defmodule FinanceTS.AdapterCase do
   using do
     quote do
       import FinanceTS.AdapterCase
-      alias FinanceTS.Schema.OHCLV
-      alias FinanceTS.Schema.TimeSeries
+      alias FinanceTS.OHCLV
+      alias FinanceTS.TimeSeries
     end
   end
 
   def assert_ts_struct(info) do
-    # assert info.__struct__ == FinanceTS.Schema.CryptoExchange
+    # assert info.__struct__ == FinanceTS.CryptoExchange
     # assert info.name
     # assert info.homepage_url
     # assert info.api_docs_url

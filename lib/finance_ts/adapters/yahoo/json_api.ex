@@ -1,8 +1,8 @@
 defmodule FinanceTS.Adapters.Yahoo.JsonApi do
   use Tesla
 
-  alias FinanceTS.Schema.OHCLV
-  alias FinanceTS.Schema.TimeSeries
+  alias FinanceTS.OHCLV
+  alias FinanceTS.TimeSeries
 
   plug(Tesla.Middleware.BaseUrl, "https://query1.finance.yahoo.com/v8/finance")
   plug(Tesla.Middleware.JSON)
@@ -38,7 +38,7 @@ defmodule FinanceTS.Adapters.Yahoo.JsonApi do
      %TimeSeries{
        symbol: meta["symbol"],
        currency: String.upcase(meta["currency"]),
-       exchange: meta["exchangeName"],
+       source: meta["exchangeName"],
        first_ts: first_ts,
        last_ts: last_ts,
        latest_price: latest_price,
@@ -51,7 +51,7 @@ defmodule FinanceTS.Adapters.Yahoo.JsonApi do
      %TimeSeries{
        symbol: meta["symbol"],
        currency: meta["currency"],
-       exchange: meta["exchangeName"],
+       source: meta["exchangeName"],
        data: []
      }}
   end

@@ -22,7 +22,7 @@ defmodule FinanceTS.Adapters.Yahoo.JsonApiTest do
       assert %{time_series | data: []} == %TimeSeries{
                symbol: "NCM.AX",
                currency: "AUD",
-               exchange: "ASX",
+               source: "ASX",
                first_ts: 1_586_217_600,
                last_ts: 1_587_099_600,
                latest_price: 28.56999969482422
@@ -57,7 +57,7 @@ defmodule FinanceTS.Adapters.Yahoo.JsonApiTest do
       assert time_series == %TimeSeries{
                symbol: "AGLDF",
                currency: "USD",
-               exchange: "PNK",
+               source: "PNK",
                data: []
              }
     end
