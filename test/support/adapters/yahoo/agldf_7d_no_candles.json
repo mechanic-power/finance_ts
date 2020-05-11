@@ -1,0 +1,65 @@
+{
+  "chart": {
+    "result": [
+      {
+        "meta": {
+          "currency": "USD",
+          "symbol": "AGLDF",
+          "exchangeName": "PNK",
+          "instrumentType": "EQUITY",
+          "firstTradeDate": 1416580200,
+          "regularMarketTime": 1586957407,
+          "gmtoffset": -14400,
+          "timezone": "EDT",
+          "exchangeTimezoneName": "America/New_York",
+          "regularMarketPrice": 0.08,
+          "chartPreviousClose": 0.08,
+          "previousClose": 0.08,
+          "scale": 3,
+          "priceHint": 4,
+          "currentTradingPeriod": {
+            "pre": {
+              "timezone": "EDT",
+              "end": 1587735000,
+              "start": 1587715200,
+              "gmtoffset": -14400
+            },
+            "regular": {
+              "timezone": "EDT",
+              "end": 1587758400,
+              "start": 1587735000,
+              "gmtoffset": -14400
+            },
+            "post": {
+              "timezone": "EDT",
+              "end": 1587772800,
+              "start": 1587758400,
+              "gmtoffset": -14400
+            }
+          },
+          "dataGranularity": "1h",
+          "range": "5d",
+          "validRanges": [
+            "1d",
+            "5d",
+            "1mo",
+            "3mo",
+            "6mo",
+            "1y",
+            "2y",
+            "5y",
+            "10y",
+            "ytd",
+            "max"
+          ]
+        },
+        "indicators": {
+          "quote": [
+            {}
+          ]
+        }
+      }
+    ],
+    "error": null
+  }
+}
