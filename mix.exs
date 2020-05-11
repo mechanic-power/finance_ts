@@ -9,7 +9,13 @@ defmodule FinanceTS.MixProject do
       elixirc_paths: elixirc_paths(Mix.env()),
       start_permanent: Mix.env() == :prod,
       deps: deps(),
+      test_coverage: [tool: ExCoveralls],
       preferred_cli_env: [
+        coveralls: :test,
+        "coveralls.detail": :test,
+        "coveralls.html": :test,
+        "coveralls.post": :test,
+        credo: :test,
         "test.watch": :test
       ]
     ]
@@ -26,6 +32,8 @@ defmodule FinanceTS.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
+      {:credo, ">= 0.0.0", only: :test},
+      {:excoveralls, "~> 0.7", only: :test},
       {:jason, "~> 1.0"},
       {:mix_test_watch, "~> 1.0", only: :test, runtime: false},
       {:tesla, "~> 1.3.0"}
