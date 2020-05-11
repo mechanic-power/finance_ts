@@ -1,3 +1,23 @@
 defmodule FinanceTS.Schema.OHCLV do
-  defstruct [:ts, :o, :h, :c, :l, :v]
+  @enforce_keys [:ts, :c]
+
+  defstruct [
+    # Timestamp (without milliseconds)
+    :ts,
+
+    # Opening price
+    :o,
+
+    # High price
+    :h,
+
+    # Low price
+    :l,
+
+    # Closeing price
+    :c,
+
+    # Volume
+    :v
+  ]
 end
