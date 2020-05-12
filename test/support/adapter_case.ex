@@ -13,13 +13,4 @@ defmodule FinanceTS.AdapterCase do
       alias FinanceTS.TimeSeries
     end
   end
-
-  def assert_ts_struct(info) do
-    # assert info.__struct__ == FinanceTS.CryptoExchange
-    # assert info.name
-    # assert info.homepage_url
-    # assert info.api_docs_url
-    assert true
-    # assert is_list(info.intervals)
-  end
 end
