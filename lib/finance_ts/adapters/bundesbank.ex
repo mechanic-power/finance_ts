@@ -7,7 +7,7 @@ defmodule FinanceTS.Adapters.Bundesbank do
 
   """
   use Tesla
-  plug(Tesla.Middleware.BaseUrl, "https://www.bundesbank.de/statistic-rmi/StatisticDownload")
+  plug(Tesla.Middleware.BaseUrl, "https://www.bundesbank.de/statistic-rmi")
 
   alias FinanceTS.OHLCV
   alias FinanceTS.TimeSeries
@@ -16,8 +16,8 @@ defmodule FinanceTS.Adapters.Bundesbank do
 
   def get_adapter_id, do: :bundesbank
 
-  def get_gold_usd do
-    case get("?tsId=BBEX3.D.XAU.USD.EA.AC.C05&its_csvFormat=en&its_fileFormat=csv&mode=its&its_from=2000") do
+  def get_list("GOLD", :d, _opts \\ []) do
+    case get("/StatisticDownload?tsId=BBEX3.D.XAU.USD.EA.AC.C05&its_csvFormat=en&its_fileFormat=csv&mode=its&its_from=2000") do
       {:ok, %{body: raw_csv}} ->
         data =
           raw_csv
