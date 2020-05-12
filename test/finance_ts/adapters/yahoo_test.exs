@@ -17,7 +17,7 @@ defmodule FinanceTS.Adapters.YahooTest do
 
   describe "#chart" do
     test "test fully working chart" do
-      {:ok, time_series} = Yahoo.chart("ncm.ax")
+      {:ok, time_series} = Yahoo.get_list("ncm.ax", :h)
 
       assert %{time_series | data: []} == %TimeSeries{
                symbol: "NCM.AX",
@@ -49,7 +49,7 @@ defmodule FinanceTS.Adapters.YahooTest do
     end
 
     test "test chart with no data" do
-      {:ok, time_series} = Yahoo.chart("agldf")
+      {:ok, time_series} = Yahoo.get_list("agldf", :h)
 
       assert time_series == %TimeSeries{
                symbol: "AGLDF",

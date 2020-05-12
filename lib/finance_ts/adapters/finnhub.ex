@@ -12,7 +12,11 @@ defmodule FinanceTS.Adapters.Finnhub do
 
   def get_adapter_id, do: :finnhub
 
-  def get_cv_csv(symbol, opts \\ []) do
+  def get_list(_symbol, _resolution, _opts \\ []) do
+    raise "Implement me"
+  end
+
+  def get_csv(symbol, _resolution, opts \\ []) do
     case get_raw_ohclv_csv(symbol, opts) do
       {:ok, csv} ->
         trimmed_csv =

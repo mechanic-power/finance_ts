@@ -17,7 +17,7 @@ defmodule FinanceTS.Adapters.Yahoo do
   plug(Tesla.Middleware.BaseUrl, "https://query1.finance.yahoo.com/v8/finance")
   plug(Tesla.Middleware.JSON)
 
-  def chart(stock_ticker, opts \\ []) do
+  def get_list(stock_ticker, _resolution, opts \\ []) do
     range = opts[:range] || "7d"
     interval = opts[:interval] || "1h"
 
@@ -31,6 +31,10 @@ defmodule FinanceTS.Adapters.Yahoo do
       {:error, error} ->
         {:error, error}
     end
+  end
+
+  def get_csv(_symbol, _resolution, _opts \\ []) do
+    raise "Implement me"
   end
 
   # Private functions

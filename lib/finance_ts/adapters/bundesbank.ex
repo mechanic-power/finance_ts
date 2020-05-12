@@ -50,6 +50,10 @@ defmodule FinanceTS.Adapters.Bundesbank do
     end
   end
 
+  def get_csv("GOLD", _resolution, _opts \\ []) do
+    raise "Implement me"
+  end
+
   # Private functions
   defp valid?(%{ts: nil}), do: false
   defp valid?(%{c: nil}), do: false

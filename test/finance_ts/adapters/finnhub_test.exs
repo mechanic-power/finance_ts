@@ -17,7 +17,7 @@ defmodule FinanceTS.Adapters.FinnhubTest do
 
   describe "#get_cv_csv" do
     test "test fully working chart" do
-      result = Finnhub.get_cv_csv("aapl", to: 1_588_344_980)
+      result = Finnhub.get_csv("aapl", :d, to: 1_588_344_980)
       assert {:ok, {csv, first_ts, last_ts}} = result
 
       assert csv |> String.split("\n") == [
@@ -41,7 +41,7 @@ defmodule FinanceTS.Adapters.FinnhubTest do
     end
 
     test "test empty chart" do
-      result = Finnhub.get_cv_csv("empty", to: 1_588_344_980)
+      result = Finnhub.get_csv("empty", :d, to: 1_588_344_980)
       assert {:error, "no data"} = result
     end
   end
