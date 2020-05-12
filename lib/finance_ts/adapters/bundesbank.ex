@@ -9,8 +9,8 @@ defmodule FinanceTS.Adapters.Bundesbank do
   use Tesla
   plug(Tesla.Middleware.BaseUrl, "https://www.bundesbank.de/statistic-rmi/StatisticDownload")
 
-  alias FinanceTS.TimeSeries
   alias FinanceTS.OHLCV
+  alias FinanceTS.TimeSeries
 
   @behaviour FinanceTS.Adapter
 

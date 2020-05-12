@@ -1,4 +1,6 @@
 defmodule FinanceTS.TimeSeries do
+  @moduledoc false
+
   @enforce_keys [:symbol, :source, :currency]
   defstruct [
     # Example: AAPL

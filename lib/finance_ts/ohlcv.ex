@@ -1,6 +1,7 @@
 defmodule FinanceTS.OHLCV do
-  @enforce_keys [:ts, :c]
+  @moduledoc false
 
+  @enforce_keys [:ts, :c]
   defstruct [
     # Timestamp (without milliseconds)
     :ts,
