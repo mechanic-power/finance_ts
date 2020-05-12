@@ -4,7 +4,6 @@ defmodule FinanceTS.Adapters.Finnhub do
 
   Homepage: https://finnhub.io/
   API Docs: https://finnhub.io/docs/api
-
   """
   use Tesla
   plug(Tesla.Middleware.BaseUrl, "https://finnhub.io/api/v1")

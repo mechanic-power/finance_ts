@@ -1,4 +1,10 @@
 defmodule FinanceTS.Adapter.Conversion do
+  @moduledoc """
+  This module contains functions for time conversions. These are use to convert
+  every kind of date to the date format of the adapter. Most likely used to convert
+  the 'from' and 'to' options.
+  """
+
   @doc """
   Convert different types of date/datetime into a timestamp
 

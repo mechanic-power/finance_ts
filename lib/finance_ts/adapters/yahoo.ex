@@ -1,4 +1,10 @@
 defmodule FinanceTS.Adapters.Yahoo do
+  @moduledoc """
+  An Adapter for Yahoo Finance
+
+  Homepage: https://finance.yahoo.com/
+  API Docs: (The api is not officially documented)
+  """
   @behaviour FinanceTS.Adapter
 
   def get_adapter_id, do: :yahoo
