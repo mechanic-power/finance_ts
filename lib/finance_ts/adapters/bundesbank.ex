@@ -22,13 +22,14 @@ defmodule FinanceTS.Adapters.Bundesbank do
         data =
           raw_csv
           |> String.split("\n")
-          |> Enum.map(fn row ->
+          |> Stream.map(fn row ->
             row
             |> String.split(",")
             |> cast_row()
           end)
-          |> Enum.filter(fn data_point -> valid?(data_point) end)
-          |> Enum.map(fn %{ts: ts, c: c} -> %OHLCV{ts: ts, c: c} end)
+          |> Stream.filter(fn data_point -> valid?(data_point) end)
+          |> Stream.map(fn %{ts: ts, c: c} -> %OHLCV{ts: ts, c: c} end)
+          |> Enum.to_list()
 
         %OHLCV{ts: first_ts} = List.first(data)
         %OHLCV{ts: last_ts, c: latest_price} = List.last(data)
