@@ -28,12 +28,12 @@ defmodule FinanceTS.Adapters.Yahoo do
   end
 
   # Private functions
-  defp cast_finance_meta(%{
-         "indicators" => %{"quote" => quotes},
-         "meta" => meta,
-         "timestamp" => timestamps
-       }) do
-    candles = cast_candles(timestamps, quotes)
+  defp cast_finance_meta(%{"indicators" => %{"quote" => [quotes]}, "meta" => meta, "timestamp" => timestamps}) do
+    candles =
+      [timestamps, quotes["open"], quotes["high"], quotes["low"], quotes["close"], quotes["volume"]]
+      |> Stream.zip()
+      |> Stream.map(fn {ts, o, h, l, c, v} -> %OHLCV{ts: ts, o: o, h: h, l: l, c: c, v: v} end)
+      |> Enum.to_list()
 
     %OHLCV{ts: first_ts} = List.first(candles)
     %OHLCV{ts: last_ts, c: latest_price} = List.last(candles)
@@ -59,18 +59,5 @@ defmodule FinanceTS.Adapters.Yahoo do
        source: meta["exchangeName"],
        data: []
      }}
-  end
-
-  defp cast_candles(timestamps, [quotes]) do
-    do_cast_candles(timestamps, quotes["open"], quotes["high"], quotes["close"], quotes["low"], quotes["volume"], [])
-  end
-
-  defp do_cast_candles([ts | list_ts], [o | list_o], [h | list_h], [c | list_c], [l | list_l], [v | list_v], result) do
-    ohclv = %OHLCV{ts: ts, o: o, h: h, c: c, l: l, v: v}
-    do_cast_candles(list_ts, list_o, list_h, list_c, list_l, list_v, [ohclv | result])
-  end
-
-  defp do_cast_candles([], [], [], [], [], [], result) do
-    result |> Enum.reverse()
   end
 end
