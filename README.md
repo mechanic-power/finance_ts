@@ -1,4 +1,8 @@
 # FinanceTS (Finance TimeSeries for Elixir)
+[![license](https://img.shields.io/github/license/mashape/apistatus.svg)](https://github.com/mechanic-power/finance_ts/blob/master/LICENSE)
+![Elixir CI](https://github.com/mechanic-power/finance_ts/workflows/Elixir%20CI/badge.svg)
+[![Coverage Status](https://coveralls.io/repos/github/mechanic-power/finance_ts/badge.svg?branch=master)](https://coveralls.io/github/mechanic-power/finance_ts?branch=master)
+[![Hex.pm](https://img.shields.io/hexpm/v/finance_ts.svg)](https://hexdocs.pm/finance_ts)
 
 FinanceTS for Elixir allows you to access free and paid finance apis to query time series data in JSON and CSV. And it’s easy to roll your own adapter.
 
