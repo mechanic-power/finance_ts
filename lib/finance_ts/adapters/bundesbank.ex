@@ -2,10 +2,9 @@ defmodule FinanceTS.Adapters.Bundesbank do
   @moduledoc """
   An Adapter for Bundesbank
 
-  Homepage: https://www.bundesbank.de
-  API Docs: https://www.bundesbank.de/en/statistics/time-series-databases
+  Homepage: https://www.bundesbank.de/dynamic/action/en/statistics/time-series-databases/time-series-databases/759784/759784?listId=www_s331_b01015_3
+  API Docs: https://www.bundesbank.de/en/statistics/time-series-databases/-/help-on-the-time-series-databases-750894
 
-  Country: Germany
   """
   use Tesla
   plug(Tesla.Middleware.BaseUrl, "https://www.bundesbank.de/statistic-rmi/StatisticDownload")
