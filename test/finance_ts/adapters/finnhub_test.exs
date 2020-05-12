@@ -5,10 +5,10 @@ defmodule FinanceTS.Adapters.FinnhubTest do
 
   setup do
     Tesla.Mock.mock(fn
-      %{method: :get, url: "https://finnhub.io/api/v1/stock/candle?symbol=aapl&resolution=D&from=915408000&to=1588344980&format=csv&token="} ->
+      %{method: :get, url: "https://finnhub.io/api/v1/stock/candle?symbol=aapl&resolution=D&from=915408000&to=1588344980&format=csv&token=secret"} ->
         %Tesla.Env{status: 200, body: File.read!("test/support/adapters/finnhub/aapl.csv")}
 
-      %{method: :get, url: "https://finnhub.io/api/v1/stock/candle?symbol=empty&resolution=D&from=915408000&to=1588344980&format=csv&token="} ->
+      %{method: :get, url: "https://finnhub.io/api/v1/stock/candle?symbol=empty&resolution=D&from=915408000&to=1588344980&format=csv&token=secret"} ->
         %Tesla.Env{status: 200, body: File.read!("test/support/adapters/finnhub/empty.csv")}
     end)
 

@@ -79,6 +79,6 @@ defmodule FinanceTS.Adapters.Finnhub do
   end
 
   defp api_key do
-    Application.get_env(:platform, :finnhub)[:api_key]
+    Application.get_env(:finance_ts, :finnhub)[:api_key]
   end
 end
