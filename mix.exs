@@ -14,7 +14,7 @@ defmodule FinanceTS.MixProject do
         coveralls: :test,
         "coveralls.detail": :test,
         "coveralls.html": :test,
-        "coveralls.post": :test,
+        "coveralls.github": :test,
         credo: :test,
         "test.watch": :test
       ]
