@@ -1,4 +1,11 @@
 defmodule FinanceTS.Adapters.Finnhub do
+  @moduledoc """
+  An Adapter for Finnhub.io
+
+  Homepage: https://finnhub.io/
+  API Docs: https://finnhub.io/docs/api
+
+  """
   use Tesla
   plug(Tesla.Middleware.BaseUrl, "https://finnhub.io/api/v1")
 
