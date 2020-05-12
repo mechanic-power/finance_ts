@@ -10,13 +10,17 @@ defmodule FinanceTS.Adapters.Finnhub do
 
   @behaviour FinanceTS.Adapter
 
+  @supported_resolutions [:m, {:m, 5}, {:m, 15}, {:m, 30}, :h, :d, :w, :m]
   def get_adapter_id, do: :finnhub
 
-  def get_list(_symbol, _resolution, _opts \\ []) do
+  def get_list(_symbol, resolution, _opts \\ []) do
+    check_resolution(resolution)
     raise "Implement me"
   end
 
-  def get_csv(symbol, _resolution, opts \\ []) do
+  def get_csv(symbol, resolution, opts \\ []) do
+    check_resolution(resolution)
+
     case get_raw_ohclv_csv(symbol, opts) do
       {:ok, csv} ->
         trimmed_csv =
@@ -84,4 +88,7 @@ defmodule FinanceTS.Adapters.Finnhub do
   defp api_key do
     Application.get_env(:finance_ts, :finnhub)[:api_key]
   end
+
+  defp check_resolution(r) when r in @supported_resolutions, do: nil
+  defp check_resolution(r), do: raise("Resolution #{inspect(r)} not supported. Use one of the following: #{inspect(@supported_resolutions)}.")
 end
