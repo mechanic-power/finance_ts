@@ -1,3 +1,5 @@
+![FinanceTS Logo](priv/static/financets-logo.png)
+
 # FinanceTS (Finance TimeSeries for Elixir)
 [![license](https://img.shields.io/github/license/mashape/apistatus.svg)](https://github.com/mechanic-power/finance_ts/blob/master/LICENSE)
 ![Elixir CI](https://github.com/mechanic-power/finance_ts/workflows/CI/badge.svg)
