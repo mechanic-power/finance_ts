@@ -1,11 +1,28 @@
 defmodule FinanceTS.Adapter.Conversion do
+  @doc """
+  Convert different types of date/datetime into a timestamp
+
+  iex> Conversion.to_ts!(315_532_800)
+  315_532_800
+
+  iex> Conversion.to_ts!(~U[1980-01-01T00:00:00Z])
+  315_532_800
+
+  iex> Conversion.to_ts!(~D[1980-01-01])
+  315_532_800
+
+  iex> Conversion.to_ts!("1980-01-01")
+  315_532_800
+
+  iex> Conversion.to_ts!("19800101")
+  315_532_800
+  """
   def to_ts!(ts) when is_integer(ts), do: ts
   def to_ts!(%DateTime{} = datetime), do: DateTime.to_unix(datetime)
   def to_ts!(%Date{} = date), do: to_ts!(Date.to_string(date))
 
   def to_ts!(str) when byte_size(str) == 10 do
     {:ok, datetime, 0} = DateTime.from_iso8601("#{str}T00:00:00Z")
-    IO.inspect(byte_size(str))
     DateTime.to_unix(datetime)
   end
 
