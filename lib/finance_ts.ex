@@ -2,6 +2,20 @@ defmodule FinanceTS do
   alias FinanceTS.OHLCV
   alias FinanceTS.TimeSeries
 
+  @doc """
+  iex> FinanceTS.to_list({:ok, [{3600, 68.7, 70.1, 64.7, 67.9, 4.0e7}, {7200, 68.3, 73.7, 65.8, 73.2, 3.2e7}], "AAPL", "USD", "..."})
+  {:ok, %TimeSeries{
+    format: :list,
+    data: [%OHLCV{c: 67.9, h: 70.1, l: 64.7, o: 68.7, ts: 3600, v: 4.0e7}, %OHLCV{c: 73.2, h: 73.7, l: 65.8, o: 68.3, ts: 7200, v: 3.2e7}],
+    symbol: "AAPL",
+    currency: "USD",
+    first_ts: 3600,
+    last_ts: 7200,
+    latest_price: 73.2,
+    size: 2,
+    source: "..."
+  }}
+  """
   def to_list({:ok, stream, symbol, currency, source}) do
     list =
       stream
@@ -16,6 +30,7 @@ defmodule FinanceTS do
        symbol: symbol,
        currency: currency,
        source: source,
+       format: :list,
        size: length(list),
        first_ts: first_ts,
        last_ts: last_ts,
@@ -24,7 +39,7 @@ defmodule FinanceTS do
      }}
   end
 
-  def to_csv({:ok, stream, symbol, currency, source}) do
+  def to_csv({:ok, stream, _symbol, _currency, _source}) do
     stream
     |> Enum.map(fn {t, o, h, l, c, v} -> Enum.join([t, o, h, l, c, v], ",") end)
     |> Enum.join("\n")
