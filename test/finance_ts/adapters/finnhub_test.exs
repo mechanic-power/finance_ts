@@ -41,5 +41,11 @@ defmodule FinanceTS.Adapters.FinnhubTest do
       result = Finnhub.get_stream("empty", :d, to: 1_588_344_980)
       assert {:error, "no data"} = result
     end
+
+    test "test invalid resolution" do
+      assert_raise RuntimeError, ~r/^Resolution :unknown not supported/, fn ->
+        Finnhub.get_stream("empty", :unknown)
+      end
+    end
   end
 end

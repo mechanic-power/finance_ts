@@ -11,7 +11,6 @@ defmodule FinanceTS.Adapters.Finnhub do
   @behaviour FinanceTS.Adapter
 
   @supported_resolutions [:m, {:m, 5}, {:m, 15}, {:m, 30}, :h, :d, :w, :m]
-  def get_adapter_id, do: :finnhub
 
   def get_stream(symbol, resolution, opts \\ []) do
     check_resolution(resolution)
