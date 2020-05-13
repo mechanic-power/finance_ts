@@ -13,23 +13,22 @@ defmodule FinanceTS.Adapters.Finnhub do
   @supported_resolutions [:m, {:m, 5}, {:m, 15}, {:m, 30}, :h, :d, :w, :m]
   def get_adapter_id, do: :finnhub
 
-  def get_list(_symbol, resolution, _opts \\ []) do
-    check_resolution(resolution)
-    raise "Implement me"
-  end
-
-  def get_csv(symbol, resolution, opts \\ []) do
+  def get_stream(symbol, resolution, opts \\ []) do
     check_resolution(resolution)
 
     case get_raw_ohclv_csv(symbol, opts) do
       {:ok, csv} ->
-        trimmed_csv =
+        stream =
           csv
           |> String.replace_leading("t,o,h,l,c,v\n", "")
           |> String.trim_trailing("\n")
-          |> filter_cv()
+          |> String.split("\n")
+          |> Stream.map(fn line ->
+            [t, o, h, l, c, v] = String.split(line, ",")
+            {cast_int(t), cast_float(o), cast_float(h), cast_float(l), cast_float(c), cast_float(v)}
+          end)
 
-        {:ok, {trimmed_csv, first_ts_from_csv(trimmed_csv), last_ts_from_csv(trimmed_csv)}}
+        {:ok, stream, symbol, "USD", "Unknown"}
 
       {:error, error} ->
         {:error, error}
@@ -37,30 +36,18 @@ defmodule FinanceTS.Adapters.Finnhub do
   end
 
   # Private functions
-  defp filter_cv(csv) when is_binary(csv) do
-    csv
-    |> String.split("\n")
-    |> Enum.map(fn line ->
-      [ts, _o, _h, _l, c, v] = String.split(line, ",")
-      Enum.join([ts, c, v], ",")
-    end)
-    |> Enum.join("\n")
+  defp cast_int(price_str) do
+    case Integer.parse(price_str) do
+      {price, _} -> price
+      :error -> nil
+    end
   end
 
-  defp first_ts_from_csv(csv) do
-    csv
-    |> String.split("\n")
-    |> List.first()
-    |> String.split(",")
-    |> List.first()
-  end
-
-  defp last_ts_from_csv(csv) do
-    csv
-    |> String.split("\n")
-    |> List.last()
-    |> String.split(",")
-    |> List.first()
+  defp cast_float(price_str) do
+    case Float.parse(price_str) do
+      {price, _} -> price
+      :error -> nil
+    end
   end
 
   defp get_raw_ohclv_csv(symbol, opts) do

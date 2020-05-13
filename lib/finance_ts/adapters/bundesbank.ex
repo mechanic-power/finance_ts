@@ -8,17 +8,12 @@ defmodule FinanceTS.Adapters.Bundesbank do
   use Tesla
   plug(Tesla.Middleware.BaseUrl, "https://www.bundesbank.de/statistic-rmi")
 
-  alias FinanceTS.OHLCV
-  alias FinanceTS.TimeSeries
-
   @behaviour FinanceTS.Adapter
 
-  def get_adapter_id, do: :bundesbank
-
-  def get_list("GOLD", :d, _opts \\ []) do
+  def get_stream("GOLD", :d, _opts \\ []) do
     case get("/StatisticDownload?tsId=BBEX3.D.XAU.USD.EA.AC.C05&its_csvFormat=en&its_fileFormat=csv&mode=its&its_from=2000") do
       {:ok, %{body: raw_csv}} ->
-        data =
+        stream =
           raw_csv
           |> String.split("\n")
           |> Stream.map(fn row ->
@@ -27,44 +22,20 @@ defmodule FinanceTS.Adapters.Bundesbank do
             |> cast_row()
           end)
           |> Stream.filter(fn data_point -> valid?(data_point) end)
-          |> Stream.map(fn %{ts: ts, c: c} -> %OHLCV{ts: ts, c: c} end)
-          |> Enum.to_list()
 
-        %OHLCV{ts: first_ts} = List.first(data)
-        %OHLCV{ts: last_ts, c: latest_price} = List.last(data)
-
-        {:ok,
-         %TimeSeries{
-           symbol: "GOLD",
-           source: "Bundesbank",
-           currency: "USD",
-           size: length(data),
-           first_ts: first_ts,
-           last_ts: last_ts,
-           latest_price: latest_price,
-           data: data
-         }}
+        {:ok, stream, "GOLD", "USD", "Bundesbank"}
 
       {:error, error} ->
         {:error, error}
     end
   end
 
-  def get_csv("GOLD", _resolution, _opts \\ []) do
-    raise "Implement me"
-  end
-
   # Private functions
-  defp valid?(%{ts: nil}), do: false
-  defp valid?(%{c: nil}), do: false
-  defp valid?(map) when is_map(map), do: true
+  defp valid?({t, _, _, _, c, _}) when not is_nil(t) and not is_nil(c), do: true
   defp valid?(_param), do: false
 
   defp cast_row([date, price_str, _]) do
-    %{
-      ts: cast_date(date),
-      c: cast_price(price_str)
-    }
+    {cast_date(date), nil, nil, nil, cast_price(price_str), nil}
   end
 
   defp cast_row(_), do: nil

@@ -15,19 +15,21 @@ defmodule FinanceTS.Adapters.BundesbankTest do
     :ok
   end
 
-  describe "#get_gold_usd" do
-    test "returns " do
-      {:ok, time_series} = Bundesbank.get_list("GOLD", :d)
+  describe "#get_stream" do
+    test "returns 123" do
+      {:ok, stream, "GOLD", "USD", "Bundesbank"} = Bundesbank.get_stream("GOLD", :d)
+      list = Enum.to_list(stream)
 
-      assert %{time_series | data: []} == %TimeSeries{
-               symbol: "GOLD",
-               currency: "USD",
-               source: "Bundesbank",
-               size: 89,
-               first_ts: 1_577_923_200,
-               last_ts: 1_588_809_600,
-               latest_price: 1704.05
-             }
+      assert list == [
+               {1_577_923_200, nil, nil, nil, 1527.1, nil},
+               {1_578_009_600, nil, nil, nil, 1548.75, nil},
+               {1_578_268_800, nil, nil, nil, 1573.1, nil},
+               {1_578_355_200, nil, nil, nil, 1567.85, nil},
+               {1_578_441_600, nil, nil, nil, 1571.95, nil},
+               {1_578_528_000, nil, nil, nil, 1550.75, nil},
+               {1_578_614_400, nil, nil, nil, 1553.6, nil},
+               {1_578_873_600, nil, nil, nil, 1549.9, nil}
+             ]
     end
   end
 end
