@@ -33,6 +33,7 @@ defmodule FinanceTS.Adapters.Yahoo do
     stream =
       [timestamps, quotes["open"], quotes["high"], quotes["low"], quotes["close"], quotes["volume"]]
       |> Stream.zip()
+      |> Stream.map(fn {t, o, h, l, c, v} -> [t, o, h, l, c, v] end)
 
     {:ok, stream, meta["symbol"], meta["currency"], meta["exchangeName"]}
   end

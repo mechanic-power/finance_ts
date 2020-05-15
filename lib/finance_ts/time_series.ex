@@ -13,17 +13,14 @@ defmodule FinanceTS.TimeSeries do
     # The ISO-4217 currency symbol
     :currency,
 
-    # First timestamp (without milliseconds) of a TimeSeries
-    :first_ts,
+    # First record, e.g. [3600, 68.7, 70.1, 64.7, 67.9, 4.0e7]
+    :first,
 
-    # Last timestamp (without milliseconds) of a TimeSeries
-    :last_ts,
-
-    # Latest price
-    :latest_price,
+    # Last record, e.g. [7200, 68.3, 73.7, 65.8, 73.2, 3.2e7]
+    :last,
 
     # ...
-    format: "list",
+    format: :stream,
 
     # The amount of datapoints that are available
     size: 0,

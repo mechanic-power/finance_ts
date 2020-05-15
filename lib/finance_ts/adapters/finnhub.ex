@@ -24,7 +24,7 @@ defmodule FinanceTS.Adapters.Finnhub do
           |> String.split("\n")
           |> Stream.map(fn line ->
             [t, o, h, l, c, v] = String.split(line, ",")
-            {cast_int(t), cast_float(o), cast_float(h), cast_float(l), cast_float(c), cast_float(v)}
+            [cast_int(t), cast_float(o), cast_float(h), cast_float(l), cast_float(c), cast_float(v)]
           end)
 
         {:ok, stream, symbol, "USD", "Unknown"}

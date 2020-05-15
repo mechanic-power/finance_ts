@@ -31,11 +31,11 @@ defmodule FinanceTS.Adapters.Bundesbank do
   end
 
   # Private functions
-  defp valid?({t, _, _, _, c, _}) when not is_nil(t) and not is_nil(c), do: true
+  defp valid?([t, _, _, _, c, _]) when not is_nil(t) and not is_nil(c), do: true
   defp valid?(_param), do: false
 
   defp cast_row([date, price_str, _]) do
-    {cast_date(date), nil, nil, nil, cast_price(price_str), nil}
+    [cast_date(date), nil, nil, nil, cast_price(price_str), nil]
   end
 
   defp cast_row(_), do: nil
