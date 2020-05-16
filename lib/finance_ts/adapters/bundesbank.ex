@@ -10,7 +10,7 @@ defmodule FinanceTS.Adapters.Bundesbank do
 
   @behaviour FinanceTS.Adapter
 
-  def get_stream("GOLD", :d, _opts \\ []) do
+  def get_stream("GOLD", :day, _opts \\ []) do
     case get("/StatisticDownload?tsId=BBEX3.D.XAU.USD.EA.AC.C05&its_csvFormat=en&its_fileFormat=csv&mode=its&its_from=2000") do
       {:ok, %{body: raw_csv}} ->
         stream =

@@ -17,7 +17,7 @@ defmodule FinanceTS.Adapters.BundesbankTest do
 
   describe "#get_stream" do
     test "returns 123" do
-      {:ok, stream, "GOLD", "USD", "Bundesbank"} = Bundesbank.get_stream("GOLD", :d)
+      {:ok, stream, "GOLD", "USD", "Bundesbank"} = Bundesbank.get_stream("GOLD", :day)
       list = Enum.to_list(stream)
 
       assert list == [

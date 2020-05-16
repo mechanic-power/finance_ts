@@ -10,12 +10,12 @@ defmodule FinanceTS.Adapters.Finnhub do
 
   @behaviour FinanceTS.Adapter
 
-  @supported_resolutions [:m, {:m, 5}, {:m, 15}, {:m, 30}, :h, :d, :w, :m]
+  @supported_resolutions [:minute, {:minute, 5}, {:minute, 15}, {:minute, 30}, :hour, :day, :week, :month]
 
   def get_stream(symbol, resolution, opts \\ []) do
     check_resolution(resolution)
 
-    case get_raw_ohclv_csv(symbol, opts) do
+    case get_raw_ohclv_csv(symbol, resolution, opts) do
       {:ok, csv} ->
         stream =
           csv
@@ -49,11 +49,11 @@ defmodule FinanceTS.Adapters.Finnhub do
     end
   end
 
-  defp get_raw_ohclv_csv(symbol, opts) do
+  defp get_raw_ohclv_csv(symbol, resolution, opts) do
     from = opts[:from] || DateTime.to_unix(~U[1999-01-04 00:00:00Z])
     to = opts[:to] || DateTime.to_unix(DateTime.utc_now())
-    resolution = opts[:resolution] || "D"
-    url = "/stock/candle?symbol=#{symbol}&resolution=#{resolution}&from=#{from}&to=#{to}&format=csv&token=#{api_key()}"
+    resolution_param = convert_resolution_to_parameter(resolution)
+    url = "/stock/candle?symbol=#{symbol}&resolution=#{resolution_param}&from=#{from}&to=#{to}&format=csv&token=#{api_key()}"
 
     case get(url) do
       {:ok, %{body: "t,o,h,l,c,v\n"}} ->
@@ -71,10 +71,19 @@ defmodule FinanceTS.Adapters.Finnhub do
     end
   end
 
-  defp api_key do
-    Application.get_env(:finance_ts, :finnhub)[:api_key]
-  end
+  defp convert_resolution_to_parameter(:minute), do: "1"
+  defp convert_resolution_to_parameter({:minute, 5}), do: "5"
+  defp convert_resolution_to_parameter({:minute, 15}), do: "15"
+  defp convert_resolution_to_parameter({:minute, 30}), do: "30"
+  defp convert_resolution_to_parameter(:hour), do: "60"
+  defp convert_resolution_to_parameter(:day), do: "D"
+  defp convert_resolution_to_parameter(:week), do: "W"
+  defp convert_resolution_to_parameter(:month), do: "M"
 
   defp check_resolution(r) when r in @supported_resolutions, do: nil
   defp check_resolution(r), do: raise("Resolution #{inspect(r)} not supported. Use one of the following: #{inspect(@supported_resolutions)}.")
+
+  defp api_key do
+    Application.get_env(:finance_ts, :finnhub)[:api_key]
+  end
 end

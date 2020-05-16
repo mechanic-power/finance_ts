@@ -17,7 +17,7 @@ defmodule FinanceTS.Adapters.FinnhubTest do
 
   describe "#get_stream" do
     test "test fully working chart" do
-      {:ok, stream, "aapl", "USD", "Unknown"} = Finnhub.get_stream("aapl", :d, to: 1_588_344_980)
+      {:ok, stream, "aapl", "USD", "Unknown"} = Finnhub.get_stream("aapl", :day, to: 1_588_344_980)
       list = Enum.to_list(stream)
 
       assert list == [
@@ -38,7 +38,7 @@ defmodule FinanceTS.Adapters.FinnhubTest do
     end
 
     test "test empty chart" do
-      result = Finnhub.get_stream("empty", :d, to: 1_588_344_980)
+      result = Finnhub.get_stream("empty", :day, to: 1_588_344_980)
       assert {:error, "no data"} = result
     end
 
