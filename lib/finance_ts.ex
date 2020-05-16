@@ -95,4 +95,44 @@ defmodule FinanceTS do
   end
 
   def to_csv({:error, error}, _opts), do: {:error, error}
+
+  @doc """
+  iex> FinanceTS.change_in_percent({:ok, [[3600, 68.7, 70.1, 64.7, 100, 4.0e7], [7200, 68.3, 73.7, 65.8, 150, 3.2e7]], "AAPL", "USD", "NYSE"}, 3600, DateTime.from_unix!(7200))
+  0.5
+
+  iex> FinanceTS.change_in_percent({:ok, [[3600, 68.7, 70.1, 64.7, 100, 4.0e7], [7200, 68.3, 73.7, 65.8, 150, 3.2e7]], "AAPL", "USD", "NYSE"}, 3600, DateTime.from_unix!(7201))
+  0.5
+
+  iex> FinanceTS.change_in_percent({:ok, [[3600, 68.7, 70.1, 64.7, 100, 4.0e7]], "AAPL", "USD", "NYSE"}, 3600, DateTime.from_unix!(17201))
+  0.0
+
+  iex> FinanceTS.change_in_percent({:ok, [[3600, 68.7, 70.1, 64.7, 100, 4.0e7]], "AAPL", "USD", "NYSE"}, 3600, DateTime.from_unix!(7201))
+  0.0
+
+  iex> FinanceTS.change_in_percent({:ok, [], "AAPL", "USD", "NYSE"}, 3600, DateTime.from_unix!(7201))
+  0.0
+  """
+  def change_in_percent(stream, change_in_seconds, now \\ DateTime.utc_now())
+
+  def change_in_percent({:ok, [], _symbol, _currency, _source}, _change_in_seconds, _now), do: 0.0
+
+  def change_in_percent({:ok, stream, _symbol, _currency, _source}, change_in_seconds, now) do
+    to_ts = now |> DateTime.to_unix()
+    from_ts = to_ts - change_in_seconds
+
+    reverse_list =
+      stream
+      |> Enum.to_list()
+      |> Enum.reverse()
+
+    to_elem = Enum.find(reverse_list, fn [t, _o, _h, _l, _c, _v] -> t <= to_ts end)
+    from_elem = Enum.find(reverse_list, fn [t, _o, _h, _l, _c, _v] -> t <= from_ts end)
+
+    [_t, _o, _h, _l, to_c, _v] = to_elem
+    [_t, _o, _h, _l, from_c, _v] = from_elem
+
+    (to_c - from_c) / from_c
+  end
+
+  def change_in_percent({:error, error}, _change_in_seconds, _now), do: {:error, error}
 end
