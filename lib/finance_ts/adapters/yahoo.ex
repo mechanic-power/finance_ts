@@ -54,12 +54,12 @@ defmodule FinanceTS.Adapters.Yahoo do
 
   # Private functions
   defp cast_finance_meta(%{"indicators" => %{"quote" => [quotes]}, "meta" => meta, "timestamp" => timestamps}) do
-    %{"symbol" => symbol, "currency" => currency, "exchangeName" => exchange_name} = meta
+    %{"symbol" => symbol, "currency" => currency, "exchangeName" => exchange_name, "gmtoffset" => gmtoffset} = meta
 
     stream =
       [timestamps, quotes["open"], quotes["high"], quotes["low"], quotes["close"], quotes["volume"]]
       |> Stream.zip()
-      |> Stream.map(fn {t, o, h, l, c, v} -> [t, o, h, l, c, v] end)
+      |> Stream.map(fn {t, o, h, l, c, v} -> [t + gmtoffset, o, h, l, c, v] end)
 
     {:ok, stream, symbol, currency, exchange_name}
   end
