@@ -5,10 +5,10 @@ defmodule FinanceTS.Adapters.YahooTest do
 
   setup do
     Tesla.Mock.mock(fn
-      %{method: :get, url: "https://query1.finance.yahoo.com/v8/finance/chart/ncm.ax?range=7d&interval=1h&events=history,div,splits"} ->
+      %{method: :get, url: "https://query1.finance.yahoo.com/v8/finance/chart/ncm.ax?range=1mo&interval=1h&events=history,div,splits"} ->
         %Tesla.Env{status: 200, body: File.read!("test/support/adapters/yahoo/ncm.ax_7d.json") |> Jason.decode!()}
 
-      %{method: :get, url: "https://query1.finance.yahoo.com/v8/finance/chart/agldf?range=7d&interval=1h&events=history,div,splits"} ->
+      %{method: :get, url: "https://query1.finance.yahoo.com/v8/finance/chart/agldf?range=1mo&interval=1h&events=history,div,splits"} ->
         %Tesla.Env{status: 200, body: File.read!("test/support/adapters/yahoo/agldf_7d_no_candles.json") |> Jason.decode!()}
     end)
 
@@ -17,7 +17,7 @@ defmodule FinanceTS.Adapters.YahooTest do
 
   describe "#get_stream" do
     test "test fully working chart" do
-      {:ok, stream, symbol, currency, source} = Yahoo.get_stream("ncm.ax", :h)
+      {:ok, stream, symbol, currency, source} = Yahoo.get_stream("ncm.ax", :hour)
       list = Enum.to_list(stream)
 
       assert length(list) == 42
@@ -30,7 +30,7 @@ defmodule FinanceTS.Adapters.YahooTest do
     end
 
     test "test chart with no data" do
-      {:ok, stream, symbol, currency, source} = Yahoo.get_stream("agldf", :h)
+      {:ok, stream, symbol, currency, source} = Yahoo.get_stream("agldf", :hour)
       list = Enum.to_list(stream)
 
       assert list == []
