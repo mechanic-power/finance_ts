@@ -34,6 +34,8 @@ defmodule FinanceTS do
      }}
   end
 
+  def to_list({:error, error}), do: {:error, error}
+
   @doc """
   iex> FinanceTS.to_csv({:ok, [[3600, 68.7, 70.1, 64.7, 67.9, 4.0e7], [7200, 68.3, 73.7, 65.8, 73.2, 3.2e7]], "AAPL", "USD", "NYSE"})
   {:ok, %TimeSeries{
@@ -59,7 +61,9 @@ defmodule FinanceTS do
     source: "NYSE"
   }}
   """
-  def to_csv({:ok, stream, symbol, currency, source}, opts \\ []) do
+  def to_csv(stream, opts \\ [])
+
+  def to_csv({:ok, stream, symbol, currency, source}, opts) do
     list =
       stream
       |> Stream.map(fn [t, o, h, l, c, v] -> %OHLCV{ts: t, o: o, h: h, l: l, c: c, v: v} end)
@@ -69,11 +73,11 @@ defmodule FinanceTS do
     csv =
       if opts[:only] == [:t, :c] do
         stream
-        |> Enum.map(fn [t, _o, _h, _l, c, _v] -> Enum.join([t, c], ",") end)
+        |> Stream.map(fn [t, _o, _h, _l, c, _v] -> Enum.join([t, c], ",") end)
         |> Enum.join("\n")
       else
         stream
-        |> Enum.map(fn list -> Enum.join(list, ",") end)
+        |> Stream.map(fn list -> Enum.join(list, ",") end)
         |> Enum.join("\n")
       end
 
@@ -89,4 +93,6 @@ defmodule FinanceTS do
        data: csv
      }}
   end
+
+  def to_csv({:error, error}, _opts), do: {:error, error}
 end
