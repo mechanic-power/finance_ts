@@ -103,6 +103,9 @@ defmodule FinanceTS do
   iex> FinanceTS.change_in_percent({:ok, [[3600, 68.7, 70.1, 64.7, 100, 4.0e7], [7200, 68.3, 73.7, 65.8, 150, 3.2e7]], "AAPL", "USD", "NYSE"}, 3600, DateTime.from_unix!(7201))
   0.5
 
+  iex> FinanceTS.change_in_percent({:ok, [[3600, 68.7, 70.1, 64.7, 100, 4.0e7], [7200, 68.3, 73.7, 65.8, 150, 3.2e7]], "AAPL", "USD", "NYSE"}, 3600, DateTime.from_unix!(6000))
+  0.0
+
   iex> FinanceTS.change_in_percent({:ok, [[3600, 68.7, 70.1, 64.7, 100, 4.0e7]], "AAPL", "USD", "NYSE"}, 3600, DateTime.from_unix!(17201))
   0.0
 
@@ -128,10 +131,14 @@ defmodule FinanceTS do
     to_elem = Enum.find(reverse_list, fn [t, _o, _h, _l, _c, _v] -> t <= to_ts end)
     from_elem = Enum.find(reverse_list, fn [t, _o, _h, _l, _c, _v] -> t <= from_ts end)
 
-    [_t, _o, _h, _l, to_c, _v] = to_elem
-    [_t, _o, _h, _l, from_c, _v] = from_elem
+    if to_elem && from_elem do
+      [_t, _o, _h, _l, to_c, _v] = to_elem
+      [_t, _o, _h, _l, from_c, _v] = from_elem
 
-    (to_c - from_c) / from_c
+      (to_c - from_c) / from_c
+    else
+      0.0
+    end
   end
 
   def change_in_percent({:error, error}, _change_in_seconds, _now), do: {:error, error}
