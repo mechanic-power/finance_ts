@@ -125,6 +125,7 @@ defmodule FinanceTS do
 
     reverse_list =
       stream
+      |> Stream.filter(fn [_t, _o, _h, _l, c, _v] -> !is_nil(c) end)
       |> Enum.to_list()
       |> Enum.reverse()
 
