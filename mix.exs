@@ -34,9 +34,9 @@ defmodule FinanceTS.MixProject do
     [
       {:credo, ">= 0.0.0", only: :test},
       {:excoveralls, "~> 0.7", only: :test},
-      {:jason, "~> 1.0"},
+      {:jason, ">= 1.0.0"},
       {:mix_test_watch, "~> 1.0", only: :test, runtime: false},
-      {:tesla, "~> 1.3.0"}
+      {:tesla, ">= 1.3.0"}
     ]
   end
 end
